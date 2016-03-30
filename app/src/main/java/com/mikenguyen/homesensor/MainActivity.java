@@ -1,8 +1,16 @@
 package com.mikenguyen.homesensor;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -12,13 +20,24 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
     private ArrayList<String> motionAlarms;
     private ListView motionAlarmListView;
     private ArrayAdapter<String> motionAlarmAdapter;
+
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private final String TAG = "MainActivity";
+
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private boolean isReceiverRegistered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +46,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(context);
+                boolean sentToken = sharedPreferences
+                        .getBoolean(Config.SENT_TOKEN_TO_SERVER, false);
+                if (sentToken) {
+                    Log.d(TAG, "Token retrieved & sent to server");
+                } else {
+                    Log.d(TAG, "Error fetching token");
+                }
+            }
+        };
+
+        // Registering BroadcastReceiver
+        registerReceiver();
+
+        if (checkPlayServices()) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
 
         //Init
         motionAlarms = new ArrayList<>();
@@ -64,8 +107,12 @@ public class MainActivity extends AppCompatActivity {
         fb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                motionAlarms.add(dataSnapshot.getValue().toString());
-                motionAlarmAdapter.notifyDataSetChanged();
+                try {
+                    motionAlarms.add(0, getLocalTime(dataSnapshot.getValue().toString()));
+                    motionAlarmAdapter.notifyDataSetChanged();
+                } catch (Exception e) {
+                    Log.e(TAG, "Error parsing motion alarm date!");
+                }
             }
 
             @Override
@@ -88,5 +135,43 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private String getLocalTime(String originalTime) throws ParseException {
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        originalFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+        SimpleDateFormat newFormat = new SimpleDateFormat("hh:mm:ss a, MM/dd/yyyy");
+        newFormat.setTimeZone(TimeZone.getDefault());
+        return newFormat.format(originalFormat.parse(originalTime)).toString();
+    }
+
+    /**
+     * Check the device to make sure it has the Google Play Services APK. If
+     * it doesn't, display a dialog that allows users to download the APK from
+     * the Google Play Store or enable it in the device's system settings.
+     */
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    private void registerReceiver(){
+        if(!isReceiverRegistered) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                    new IntentFilter(Config.REGISTRATION_COMPLETE));
+            isReceiverRegistered = true;
+        }
     }
 }
