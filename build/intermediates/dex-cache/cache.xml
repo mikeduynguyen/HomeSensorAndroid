@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/Developer/.gradle/caches/modules-2/files-2.1/com.firebase/tubesock/0.0.12/6ec0bbd3e161a73ed672284b587fd32309a86d7a/tubesock-0.0.12.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="6ec0bbd3e161a73ed672284b587fd32309a86d7a">
+        <dex dex="/Users/Developer/Desktop/Projects/Android/HomeSensor/app/build/intermediates/pre-dexed/debug/tubesock-0.0.12_998f1a9a3fd12853fea2ef093795f97f8050fbc3.jar" />
+    </item>
+    <item
+        jar="/Users/Developer/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-annotations/2.2.2/285cb9c666f0f0f3dd8a1be04e1f457eb7b15113/jackson-annotations-2.2.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="285cb9c666f0f0f3dd8a1be04e1f457eb7b15113">
+        <dex dex="/Users/Developer/Desktop/Projects/Android/HomeSensor/app/build/intermediates/pre-dexed/debug/jackson-annotations-2.2.2_a4a08989d73ea2abc368162c26b87907e9b62ba5.jar" />
+    </item>
+    <item
+        jar="/Users/Developer/.gradle/caches/modules-2/files-2.1/com.firebase/firebase-client-android/2.5.2/f19f10d6276aa0b380e2d05d2ab3272d693a5433/firebase-client-android-2.5.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="f19f10d6276aa0b380e2d05d2ab3272d693a5433">
+        <dex dex="/Users/Developer/Desktop/Projects/Android/HomeSensor/app/build/intermediates/pre-dexed/debug/firebase-client-android-2.5.2_31183371a7b18e165b8c25ef6ec2e7c839957e05.jar" />
+    </item>
+    <item
+        jar="/Users/Developer/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.2.2/3c8f6018eaa72d43b261181e801e6f8676c16ef6/jackson-databind-2.2.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="3c8f6018eaa72d43b261181e801e6f8676c16ef6">
+        <dex dex="/Users/Developer/Desktop/Projects/Android/HomeSensor/app/build/intermediates/pre-dexed/debug/jackson-databind-2.2.2_2ae88b1dfeac698e892b7ba5c37ecc2090c77610.jar" />
+    </item>
+    <item
+        jar="/Users/Developer/.gradle/caches/modules-2/files-2.1/com.firebase/firebase-client-jvm/2.5.2/91731b8f5868a3e8a8a773f29b8d06b5c358f5bb/firebase-client-jvm-2.5.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="91731b8f5868a3e8a8a773f29b8d06b5c358f5bb">
+        <dex dex="/Users/Developer/Desktop/Projects/Android/HomeSensor/app/build/intermediates/pre-dexed/debug/firebase-client-jvm-2.5.2_da42c66003c3d5d01ab4476025db1be62c084578.jar" />
+    </item>
+    <item
+        jar="/Users/Developer/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.2.2/d20be6a5ddd6f8cfd36ebf6dea329873a1c41f1b/jackson-core-2.2.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="d20be6a5ddd6f8cfd36ebf6dea329873a1c41f1b">
+        <dex dex="/Users/Developer/Desktop/Projects/Android/HomeSensor/app/build/intermediates/pre-dexed/debug/jackson-core-2.2.2_40c4ca49ca7d406bcc7650434203d5f667b1adb5.jar" />
+    </item>
+
+</items>
