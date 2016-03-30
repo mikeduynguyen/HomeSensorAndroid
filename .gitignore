@@ -1,2 +1,3 @@
 app/src/main/java/com/mikenguyen/homesensor/Config.java 
 .idea/*
+app/google-services.json

@@ -30,4 +30,7 @@ dependencies {
     compile 'com.android.support:design:23.2.1'
     compile 'com.pubnub:pubnub-android:3.7.8'
     compile 'com.firebase:firebase-client-android:2.5.2+'
+    compile "com.google.android.gms:play-services-gcm:8.4.0"
 }
+
+apply plugin: 'com.google.gms.google-services'
